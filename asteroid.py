@@ -2,6 +2,7 @@ import random
 from typing import ClassVar
 
 import pygame
+
 from circleshape import CircleShape
 from constants import ASTEROID_MIN_RADIUS
 
