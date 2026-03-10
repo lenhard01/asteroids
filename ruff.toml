@@ -1,0 +1,29 @@
+line-length = 88
+
+[lint]
+select = [
+  "I",   # isort
+  "UP",  # pyupgrade
+  "B",   # bugbear
+  "N", # naming conventions
+  "S", # security
+  "A", # builtins
+  "ASYNC", # async best practices
+  "E", "W",
+  "F",
+  "SIM",
+]
+
+ignore = [
+    # Line too long (handled by formatter)
+    "E501",
+    # don't force type hints on 'self', 'cls', tests, etc.
+    "ANN101", "ANN102", "ANN401",
+    # ignore unused imports
+    "F401",
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+
