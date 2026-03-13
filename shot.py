@@ -9,7 +9,7 @@ from constants import SHOT_RADIUS
 class Shot(CircleShape):
     containers: ClassVar[tuple[pygame.sprite.Group, ...]]
 
-    def __init__(self, x: int, y: int, velocity: pygame.Vector2) -> None:
+    def __init__(self, x: float, y: float, velocity: pygame.Vector2) -> None:
         super().__init__(x, y, SHOT_RADIUS)
         self.velocity += velocity
 

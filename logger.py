@@ -10,9 +10,9 @@ _FPS = 60
 _MAX_SECONDS = 16
 _SPRITE_SAMPLE_LIMIT = 10  # Maximum number of sprites to log per group
 
-_frame_count = 0
-_state_log_initialized = False
-_event_log_initialized = False
+_frame_count: int = 0
+_state_log_initialized: bool = False
+_event_log_initialized: bool = False
 _start_time = datetime.now()
 
 
@@ -38,23 +38,23 @@ def log_state() -> None:
     if frame_back is None:
         return
 
-    local_vars = frame_back.f_locals.copy()
+    local_vars: dict[str, object] = frame_back.f_locals.copy()
 
-    screen_size = []
-    game_state = {}
+    screen_size: list[int] = []
+    game_state: dict[str, object] = {}
 
     for key, value in local_vars.items():
         if "pygame" in str(type(value)) and hasattr(value, "get_size"):
             screen_size = value.get_size()
 
         if hasattr(value, "__class__") and "Group" in value.__class__.__name__:
-            sprites_data = []
+            sprites_data: list[dict[str, object]] = []
 
             for i, sprite in enumerate(value):
                 if i >= _SPRITE_SAMPLE_LIMIT:
                     break
 
-                sprite_info = {"type": sprite.__class__.__name__}
+                sprite_info: dict[str, object] = {"type": sprite.__class__.__name__}
 
                 if hasattr(sprite, "position"):
                     sprite_info["pos"] = [
@@ -100,7 +100,7 @@ def log_state() -> None:
 
             game_state[key] = sprite_info
 
-    entry = {
+    entry: dict[str, object] = {
         "timestamp": now.strftime("%H:%M:%S.%f")[:-3],
         "elapsed_s": math.floor((now - _start_time).total_seconds()),
         "frame": _frame_count,
@@ -116,7 +116,7 @@ def log_state() -> None:
     _state_log_initialized = True
 
 
-def log_event(event_type, **details) -> None:
+def log_event(event_type: str, **details: object) -> None:
     global _event_log_initialized
 
     now = datetime.now()
