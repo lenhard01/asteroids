@@ -1,4 +1,4 @@
-line-length = 88
+line-length = 120
 
 [lint]
 select = [
@@ -9,21 +9,35 @@ select = [
   "S", # security
   "A", # builtins
   "ASYNC", # async best practices
-  "E", "W",
-  "F",
-  "SIM",
+  "E", "W", # pycodestyle
+  "F", # pyflakes
+  "SIM", # simplify
+  "PT", # pytest
+  "TD", # todo
+  "NPY", # numpy
+  "TC", # type-checking
+  "PTH", # pathlib
+  "TID", # import practices
+  "C4", # comprehensions
+  "FA", # from __future__ import annotations
+  "ISC", # string concatenation
+  "ICN", # common import conventions
+  "RET", # good return practices
 ]
 
 ignore = [
-    # Line too long (handled by formatter)
-    "E501",
-    # don't force type hints on 'self', 'cls', tests, etc.
+    "E501", # Line too long (handled by formatter)
+
+    # reserved for future use if ANN or F rules are added to select:
     "ANN101", "ANN102", "ANN401",
-    # ignore unused imports
-    "F401",
 ]
+
+[lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+"__init__.py" = ["F401"]
 
 [format]
 quote-style = "double"
 indent-style = "space"
+line-ending = "auto"
 
