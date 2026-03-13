@@ -23,6 +23,7 @@ select = [
   "ISC", # string concatenation
   "ICN", # common import conventions
   "RET", # good return practices
+  "ANN" # type annotations
 ]
 
 ignore = [
