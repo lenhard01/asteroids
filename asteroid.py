@@ -10,7 +10,7 @@ from constants import ASTEROID_MIN_RADIUS
 class Asteroid(CircleShape):
     containers: ClassVar[tuple[pygame.sprite.Group, ...]]
 
-    def __init__(self, x: float, y: float, radius: int) -> None:
+    def __init__(self, x: float, y: float, radius: float) -> None:
         super().__init__(x, y, radius)
 
     def draw(self, screen: pygame.Surface) -> None:
