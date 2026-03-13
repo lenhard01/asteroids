@@ -2,6 +2,7 @@ import inspect
 import json
 import math
 from datetime import datetime
+from pathlib import Path
 
 __all__ = ["log_state", "log_event"]
 
@@ -109,7 +110,7 @@ def log_state() -> None:
 
     # New log file on each run
     mode = "w" if not _state_log_initialized else "a"
-    with open("game_state.jsonl", mode) as f:
+    with Path("game_state.jsonl").open(mode) as f:
         f.write(json.dumps(entry) + "\n")
 
     _state_log_initialized = True
@@ -129,7 +130,7 @@ def log_event(event_type, **details) -> None:
     }
 
     mode = "w" if not _event_log_initialized else "a"
-    with open("game_events.jsonl", mode) as f:
+    with Path("game_events.jsonl").open(mode) as f:
         f.write(json.dumps(event) + "\n")
 
     _event_log_initialized = True
