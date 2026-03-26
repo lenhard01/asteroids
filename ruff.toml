@@ -30,7 +30,8 @@ ignore = [
     "E501", # Line too long (handled by formatter)
 
     # reserved for future use if ANN or F rules are added to select:
-    "ANN101", "ANN102", "ANN401",
+    "ANN401",
+    "FA102", # from __future__ import annotations not needed on 3.10+
 ]
 
 [lint.per-file-ignores]
@@ -41,4 +42,3 @@ ignore = [
 quote-style = "double"
 indent-style = "space"
 line-ending = "auto"
-
