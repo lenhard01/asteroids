@@ -29,9 +29,8 @@ def main() -> None:
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     AsteroidField()
 
-    dt: int | float = 0
-
     while True:
+        dt = clock.tick(60) / 1000
         log_state()
 
         for event in pygame.event.get():
@@ -59,7 +58,6 @@ def main() -> None:
             obj.draw(screen)
 
         pygame.display.flip()
-        dt = clock.tick(60) / 1000
 
 
 if __name__ == "__main__":
