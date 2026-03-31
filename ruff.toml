@@ -2,36 +2,16 @@ line-length = 120
 
 [lint]
 select = [
-  "I",   # isort
-  "UP",  # pyupgrade
-  "B",   # bugbear
-  "N", # naming conventions
-  "S", # security
-  "A", # builtins
-  "ASYNC", # async best practices
-  "E", "W", # pycodestyle
-  "F", # pyflakes
-  "SIM", # simplify
-  "PT", # pytest
-  "TD", # todo
-  "NPY", # numpy
-  "TC", # type-checking
-  "PTH", # pathlib
-  "TID", # import practices
-  "C4", # comprehensions
-  "FA", # from __future__ import annotations
-  "ISC", # string concatenation
-  "ICN", # common import conventions
-  "RET", # good return practices
-  "ANN" # type annotations
+    "A","ANN","ASYNC","B","C4","E","W","F","I","ICN", "PERF", "G",
+    "ISC","N","NPY","PT","PTH","RET","S","SIM","TC","TID","UP","RUF"
 ]
 
 ignore = [
-    "E501", # Line too long (handled by formatter)
-
-    # reserved for future use if ANN or F rules are added to select:
+    "E501",
+    "ANN101",
+    "ANN102",
     "ANN401",
-    "FA102", # from __future__ import annotations not needed on 3.10+
+    "ISC001",
 ]
 
 [lint.per-file-ignores]
