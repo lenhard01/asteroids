@@ -4,7 +4,7 @@ import math
 from datetime import datetime
 from pathlib import Path
 
-__all__ = ["log_state", "log_event"]
+__all__ = ["log_event", "log_state"]
 
 _FPS = 60
 _MAX_SECONDS = 16
