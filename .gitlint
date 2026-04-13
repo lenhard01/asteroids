@@ -1,8 +1,0 @@
-[general]
-ignore = B6
-
-[title-match-regex]
-regex = ^(feat|fix|chore|docs|style|refactor|test|perf|ci|build|revert)(\(.+\))?: .+
-
-[title-max-length]
-line-length = 72
