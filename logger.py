@@ -1,6 +1,7 @@
 import inspect
 import json
 import math
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -10,22 +11,26 @@ _FPS = 60
 _MAX_SECONDS = 16
 _SPRITE_SAMPLE_LIMIT = 10  # Maximum number of sprites to log per group
 
-_frame_count: int = 0
-_state_log_initialized: bool = False
-_event_log_initialized: bool = False
+
+@dataclass
+class _LogState:
+    frame_count: int = 0
+    state_log_initialized: bool = False
+    event_log_initialized: bool = False
+
+
+_log = _LogState()
 _start_time = datetime.now(tz=UTC)
 
 
 def log_state() -> None:
-    global _frame_count, _state_log_initialized
-
     # Stop logging after `_MAX_SECONDS` seconds
-    if _frame_count > _FPS * _MAX_SECONDS:
+    if _log.frame_count > _FPS * _MAX_SECONDS:
         return
 
     # Take a snapshot approx. once per second
-    _frame_count += 1
-    if _frame_count % _FPS != 0:
+    _log.frame_count += 1
+    if _log.frame_count % _FPS != 0:
         return
 
     now = datetime.now(tz=UTC)
@@ -105,34 +110,32 @@ def log_state() -> None:
     entry: dict[str, object] = {
         "timestamp": now.strftime("%H:%M:%S.%f")[:-3],
         "elapsed_s": math.floor((now - _start_time).total_seconds()),
-        "frame": _frame_count,
+        "frame": _log.frame_count,
         "screen_size": screen_size,
         **game_state,
     }
 
     # New log file on each run
-    mode = "w" if not _state_log_initialized else "a"
+    mode = "w" if not _log.state_log_initialized else "a"
     with Path("game_state.jsonl").open(mode) as f:
         f.write(json.dumps(entry) + "\n")
 
-    _state_log_initialized = True
+    _log.state_log_initialized = True
 
 
 def log_event(event_type: str, **details: object) -> None:
-    global _event_log_initialized
-
     now = datetime.now(tz=UTC)
 
     event = {
         "timestamp": now.strftime("%H:%M:%S.%f")[:-3],
         "elapsed_s": math.floor((now - _start_time).total_seconds()),
-        "frame": _frame_count,
+        "frame": _log.frame_count,
         "type": event_type,
         **details,
     }
 
-    mode = "w" if not _event_log_initialized else "a"
+    mode = "w" if not _log.event_log_initialized else "a"
     with Path("game_events.jsonl").open(mode) as f:
         f.write(json.dumps(event) + "\n")
 
-    _event_log_initialized = True
+    _log.event_log_initialized = True
