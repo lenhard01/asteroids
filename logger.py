@@ -1,7 +1,7 @@
 import inspect
 import json
 import math
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 __all__ = ["log_event", "log_state"]
@@ -13,7 +13,7 @@ _SPRITE_SAMPLE_LIMIT = 10  # Maximum number of sprites to log per group
 _frame_count: int = 0
 _state_log_initialized: bool = False
 _event_log_initialized: bool = False
-_start_time = datetime.now()
+_start_time = datetime.now(tz=UTC)
 
 
 def log_state() -> None:
@@ -28,7 +28,7 @@ def log_state() -> None:
     if _frame_count % _FPS != 0:
         return
 
-    now = datetime.now()
+    now = datetime.now(tz=UTC)
 
     frame = inspect.currentframe()
     if frame is None:
@@ -54,7 +54,9 @@ def log_state() -> None:
                 if i >= _SPRITE_SAMPLE_LIMIT:
                     break
 
-                sprite_info: dict[str, object] = {"type": sprite.__class__.__name__}
+                sprite_info: dict[str, object] = {
+                    "type": sprite.__class__.__name__
+                }
 
                 if hasattr(sprite, "position"):
                     sprite_info["pos"] = [
@@ -119,7 +121,7 @@ def log_state() -> None:
 def log_event(event_type: str, **details: object) -> None:
     global _event_log_initialized
 
-    now = datetime.now()
+    now = datetime.now(tz=UTC)
 
     event = {
         "timestamp": now.strftime("%H:%M:%S.%f")[:-3],
